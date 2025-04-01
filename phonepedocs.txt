@@ -1,0 +1,683 @@
+Introduction
+Backend NodeJs SDK to integrate PhonePe PG APIs.
+
+Installation
+anchor image
+Minimum supported versions
+
+Node Version: v14
+Install the dependency using npm
+
+npm i https://phonepe.mycloudrepo.io/public/repositories/phonepe-pg-sdk-node/releases/v2/phonepe-pg-sdk-node.tgz
+Onboarding
+anchor image
+To get your client ID and secret, refer to the PhonePe business dashboard in Production. For UAT, you can reach out to the Integration team.
+
+String clientId = "<clientId>";
+String clientSecret = "<clientSecret>";
+Integer clientVersion = "<clientVersion>"; 
+Quick start:
+anchor image
+Class Initialisation
+To create an instance of the StandardCheckoutClient class, you need to provide the keys received at the time of onboarding.
+
+Example usage:
+
+import { StandardCheckoutClient, Env } from 'pg-sdk-node';
+ 
+const clientId = "<clientId>";
+const clientSecret = "<clientSecret>";
+const clientVersion = 1;  //insert your client version here
+const env = Env.SANDBOX;      //change to Env.PRODUCTION when you go live
+ 
+const client = StandardCheckoutClient.getInstance(clientId, clientSecret, clientVersion, env);
+For detailed information on Class Initialisation – Refer here
+
+Initiate an order using Checkout Page
+To use the PhonePe Payment Gateway, create the request using the StandardCheckoutPayRequest.Builder() and then send this request to the pay() function.
+
+You will get to initiate the order using the pay function :
+
+Code :
+
+import { StandardCheckoutPayRequest } from 'pg-sdk-node';
+import { randomUUID } from 'crypto';
+  
+const merchantOrderId = randomUUID();
+const amount = 100;
+const redirectUrl = "https://www.merchant.com/redirect";
+  
+const request = StandardCheckoutPayRequest.builder()
+        .merchantOrderId(merchantOrderId)
+        .amount(amount)
+        .redirectUrl(redirectUrl)
+        .build();
+  
+client.pay(request).then((response)=> {
+    const checkoutPageUrl = response.redirectUrl;
+    console.log(checkoutPageUrl);
+})
+The data will be in a StandardCheckoutPayResponse object.
+User should be redirected to the checkoutPageUrl received in the response.
+
+For detailed information on Initiate Payment – Refer here
+
+Check Status of an order
+To check the status of the order.
+
+import { OrderStatusResponse } from 'pg-sdk-node';
+ 
+const merchantOrderId = '<merchantOrderId>'; //created at the time of order creation
+ 
+client.getOrderStatus(merchantOrderId).then((response) => {
+  const state = response.state;
+});
+Returns an OrderStatusResponse Object
+
+For detailed information on Check Order Status – Refer here
+
+Order Callback Handling
+You will receive a callback if you have configured URL in the dashboard
+
+Verify the validity of the callback received from PhonePe using validateCallback() function. You need to pass four parameters to the function
+
+username 
+password
+authorization (received in callback headers)
+responseBody (received in the callback payload)
+code :
+
+const authorizationHeaderData = "ef4c914c591698b268db3c64163eafda7209a630f236ebf0eebf045460df723a" // received in the response headers
+const phonepeS2SCallbackResponseBodyString = "{\"type\": \"PG_ORDER_COMPLETED\",\"payload\": {}}"  // callback body as string
+  
+const usernameConfigured = "<MERCHANT_USERNAME>"
+const passwordConfigured = "<MERCHANT_PASSWORD>" 
+ 
+const callbackResponse = client.validateCallback(
+    usernameConfigured,
+    passwordConfigured,
+    authorizationHeaderData,
+    phonepeS2SCallbackResponseBodyString );
+ 
+const orderId = callbackResponse.payload.orderId;
+const state = callbackResponse.payload.state;
+The validateCallback will throw PhonePeException, if the callback is invalid.
+
+Possible order callback states:
+
+checkout.order.completed
+checkout.order.failed
+checkout.transaction.attempt.failed
+For detailed information on Order Callback Handling – Refer here
+
+Create Order SDK Integration
+This function is used when the merchant is using the Frontend SDK and backend is in Nodejs. Merchant can call the function to get the token which can be used by the frontend to initiate an order
+
+Use case – When your backend is in NodeJs and you are using a Frontend SDK as well
+
+The createSdkOrder() function is used to create an order.
+
+import { StandardCheckoutClient, Env, CreateSdkOrderRequest } from 'pg-sdk-node';
+import { randomUUID } from 'crypto';
+ 
+const clientId = "<clientId>";
+const clientSecret = "<clientSecret>";
+const clientVersion = 1;  //insert your client version here
+const env = Env.SANDBOX;      //change to Env.PRODUCTION when you go live
+ 
+const client = StandardCheckoutClient.getInstance(clientId, clientSecret, clientVersion, env);
+ 
+const merchantOrderId = randomUUID();
+const amount = 1000;
+const redirectUrl = "https://redirectUrl.com";
+ 
+const request = CreateSdkOrderRequest.StandardCheckoutBuilder()
+        .merchantOrderId(merchantOrderId)
+        .amount(amount)
+        .redirectUrl(redirectUrl)
+        .build();
+ 
+client.createSdkOrder(request).then((response) => {
+    const token = response.token
+})
+The function returns a CreateSdkOrderResponse object from which merchant should retrieve the Order Token.
+
+For detailed information on Created Order SDK – Refer here
+
+Updated on Dec 13, 2024
+
+
+
+
+
+Class Initialization
+SDK details
+anchor image
+Class Initialization
+StandardCheckoutClient class will be used to communicate with the PhonePe APIs. You can initiate the instance of this class only once.
+Use required credentials while initializing the object.
+
+Parameters
+Parameter Name	Data Type	Mandatory	Description
+clientId	String	Yes	Client ID for secure communication with PhonePe.
+clientSecret	String	Yes	Secret provided by PhonePe. To be kept secure on the merchant side.
+clientVersion	Number	Yes	Client version for secure communication with PhonePe.
+env	Env	Yes	Environment for the StandardCheckoutClient: 
+‘PRODUCTION’ (production), 
+‘SANDBOX’ (testing).
+
+Throws PhonePeException
+If another StandardCheckoutClient object is initialized, PhonePeException is thrown.
+
+Example Usage :
+
+import { StandardCheckoutClient, Env } from 'pg-sdk-node';
+ 
+const clientId = "<clientId>";
+const clientSecret = "<clientSecret>";
+const clientVersion = 1;  //insert your client version here
+const env = Env.SANDBOX;      //change to Env.PRODUCTION when you go live
+ 
+const client = StandardCheckoutClient.getInstance(clientId, clientSecret, clientVersion, env);
+Updated on Jan 07, 2025
+
+
+
+
+Initiate Payment
+Pay
+This method is used to initiate a payment via the PhonePe PG.
+
+Merchants can use the StandardCheckoutPayRequest.builder() to create the request and the following are the attributes that merchant can pass.
+
+Standard checkout Pay Request Builder
+Builds Pay Page request.
+
+Attributes
+Attribute	Data Type	Mandatory	Description	Constraints
+merchantOrderId	String	Yes	The unique order ID assigned by the merchant.	1. merchantOrderId length should be less than 63 characters
+2. No Special characters allowed except underscore “_” and hyphen “-“
+amount	Number	Yes	Order amount in paisa.	Minimum value = 100 (in paise)
+redirectUrl	String	No	URL where user will be redirected after success/failed payment.	
+Use the above information as shown in the example below
+
+Example :
+
+import { StandardCheckoutClient, Env, MetaInfo, StandardCheckoutPayRequest } from 'pg-sdk-node';
+import { randomUUID } from 'crypto';
+ 
+const clientId = "<clientId>";
+const clientSecret = "<clientSecret>";
+const clientVersion = 1;    //insert your client version here
+const env = Env.SANDBOX;        //change to Env.PRODUCTION when you go live
+ 
+const client = StandardCheckoutClient.getInstance(clientId, clientSecret, clientVersion, env);
+ 
+const merchantOrderId = randomUUID();
+const amount = 100;
+const redirectUrl = "https://www.merchant.com/redirect";
+const metaInfo = MetaInfo.builder()
+                    .udf1("udf1")
+                    .udf2("udf2")
+                    .build();
+ 
+const request = StandardCheckoutPayRequest.builder()
+        .merchantOrderId(merchantOrderId)
+        .amount(amount)
+        .redirectUrl(redirectUrl)
+        .metaInfo(metaInfo)
+        .build();
+ 
+client.pay(request).then((response)=> {
+    const checkoutPageUrl = response.redirectUrl;
+})
+Returns :
+
+The function returns a StandardCheckoutPayResponse object with the following properties:
+
+StandardCheckoutPayResponse properties
+
+Here is the response property table for the given model:
+
+Attribute	Data Type	Description
+state	String	State of the order.
+Expected value is PENDING
+redirectUrl	String	The URL for the PG Standard Checkout (merchant is supposed to redirect user to complete payment)
+orderId	String	PG generated internal order id
+expireAt	Number	Order expiry date in epoch
+Updated on Jan 07, 2025
+
+
+
+
+
+
+
+Create SDK Order
+This is specifically used to generate a order token when the user’s backend is in NodeJs and they are using any Mobile SDK.
+
+SDK setup
+Used to fetch the Order token required by the frontend app to init pay requests.
+
+Merchants can use the CreateSdkOrderRequest.StandardCheckoutBuilder() to create the request and the following are the attributes that merchant can pass.
+
+SDK Order Request Builder
+Builds SDK order request.
+
+Attributes
+Parameter name	Data Type	Mandatory	Description	Constraints
+merchantOrderId	String	Yes	Unique merchant id generated by merchant	Max Length = 63 characters
+amount	Number	Yes	Amount in paisa	Minimum value = 100 (in paise)
+redirectUrl	String	Yes	The URL to which the user should be redirected after the payment is completed	
+Example :
+
+import { StandardCheckoutClient, Env, CreateSdkOrderRequest } from 'pg-sdk-node';
+import { randomUUID } from 'crypto';
+ 
+const clientId = "<clientId>";
+const clientSecret = "<clientSecret>";
+const clientVersion = 1;  //insert your client version here
+const env = Env.SANDBOX;      //change to Env.PRODUCTION when you go live
+ 
+const client = StandardCheckoutClient.getInstance(clientId, clientSecret, clientVersion, env);
+ 
+const merchantOrderId = randomUUID();
+const amount = 1000;
+const redirectUrl = "https://redirectUrl.com";
+ 
+const request = CreateSdkOrderRequest.StandardCheckoutBuilder()
+        .merchantOrderId(merchantOrderId)
+        .amount(amount)
+        .redirectUrl(redirectUrl)
+        .build();
+ 
+client.createSdkOrder(request).then((response) => {
+    const token = response.token
+})
+Returns :
+
+The function returns a CreateOrderResponse object with the following properties:
+
+Property	Data Type	Description
+orderId	String	Order ID generated by PhonePe
+state	String	State of the Order. Initially it will be PENDING
+expireAt	Number	Expiry time in epoch
+token	String	Token to be used by the merchant app to initiate order
+Updated on Jan 08, 2025
+
+
+
+
+
+Order Status
+Order Status
+Checks the status of an order.
+
+Parameters
+Parameter Name	Data Type	Mandatory	Description
+merchantOrderId	String	Yes	The merchant order ID for which the status is fetched.
+details	Boolean	No	true → return all attempt details under paymentDetails list.
+
+false → return only latest attempt details under paymentDetails list
+Example :
+
+import { StandardCheckoutClient, Env } from 'pg-sdk-node';
+ 
+const clientId:string = "<clientId>";
+const clientSecret:string = "<clientSecret>";
+const clientVersion:string = 1;  //insert your client version here
+const env:Env = Env.SANDBOX;      //change to Env.PRODUCTION when you go live
+ 
+const client = StandardCheckoutClient.getInstance(clientId, clientSecret, clientVersion, env);
+ 
+const merchantOrderId = '<MERCHANT_ORDER_ID>';                    //Order Id used for creating new order
+ 
+client.getOrderStatus(merchantOrderId).then((response) => {
+  const state = response.state;
+});
+Returns :
+The function returns an OrderStatusResponse object with the following properties:
+
+Property	Data Type	Description
+orderId	String	Order ID created by PhonePe.
+state	String	State of order, Expected Values – PENDING,
+FAILED,
+COMPLETED.
+amount	Number	Order amount in paisa.
+expireAt	Number	order expiry time in epoch.
+paymentDetails	List<PaymentDetail>	Contain list of details of each payment attempt made corresponding to this order.
+paymentDetail object has the following properties:
+
+Property	Data Type	Description
+paymentMode	String	Mode of payment. Expected Values – UPI_INTENT,
+UPI_COLLECT,
+UPI_QR, CARD,
+TOKEN,
+NET_BANKING.
+timestamp	Number	
+Amount	Number	Order amount in paisa.
+transactionId	String	internal transaction id for given payment attempt.
+state	String	Transaction attempt state. Expected Values = 
+PENDING,
+COMPLETED,
+FAILED
+errorCode	String	Error code (Only present when transaction state is failed)
+detailedErrorCode	String	Detailed Error Code (Only present when transaction state is failed)
+splitInstruments	List<InstrumentCombo>	Contains split instrument details of all the transactions made
+InstrumentCombo
+
+Property	Data Type	Description
+instrument	PaymentInstrumentV2	Instrument used for the payment
+rails	PaymentRail	Rail used for the payment
+amount	Number	Order amount in paisa.
+Updated on Jan 07, 2025
+
+
+
+
+Refund
+Refund
+It is used to initiate a refund using refund() function
+
+Merchants can use the RefundRequest.builder() to create the refund request and the following are the attributes that merchant can pass.
+
+Refund Request Builder
+Builds Refund request.
+
+Attributes
+Parameter name	Data Type	Mandatory	Description	Constraints
+merchantRefundId	String	Yes	Unique merchant refund id generated by merchant	Max Length = 63 characters
+originalMerchantOrderId	String	Yes	
+Original merchant order id against which refund is required	
+amount	Number	Yes	Amount in paisa to refund	Min value = 100 (in Paise), Max value = order amount
+Example :
+
+import { StandardCheckoutClient, Env, RefundRequest } from 'pg-sdk-node';
+import { randomUUID } from 'crypto';
+ 
+const clientId = "<clientId>";
+const clientSecret = "<clientSecret>";
+const clientVersion = 1;  //insert your client version here
+const env = Env.SANDBOX;      //change to Env.PRODUCTION when you go live
+ 
+const client = StandardCheckoutClient.getInstance(clientId, clientSecret, clientVersion, env);
+ 
+const refundId = randomUUID();
+const originalMerchantOrderId = '<MERCHANT_ORDER_ID>';    //merchantOrderId for which order has to be initiated
+const amount = 100                                      //amount to be refund
+ 
+const request = RefundRequest.builder()
+    .amount(amount)
+    .merchantRefundId(refundId)
+    .originalMerchantOrderId(originalMerchantOrderId)
+    .build();
+ 
+client.refund(request).then((response) => {
+    const state = response.state
+})
+Returns :
+
+The function returns a RefundResponse object with the following properties:
+
+Property	Data Type	Description
+refundId	String	PhonePe generated internal refund id
+state	String	The state of the refund initiated. Initially it will be PENDING
+amount	Long	Amount in paisa that will be refunded
+Updated on Jan 08, 2025
+
+
+
+
+
+Refund Status
+Refund Status
+It is used to retrieve the status of a refund using getRefundStatus() function.
+
+Parameters
+Parameter Name	Data Type	Mandatory	Description
+refundId	String	Yes	Refund Id created by the merchant at the time of initiating the refund
+Example :
+
+import {StandardCheckoutClient, Env} from 'pg-sdk-node';
+ 
+const clientId = "<clientId>";
+const clientSecret = "<clientSecret>";
+const clientVersion = 1;  //insert your client version here
+const env = Env.SANDBOX;      //change to Env.PRODUCTION when you go live
+ 
+const client = StandardCheckoutClient.getInstance(clientId, clientSecret, clientVersion, env);
+ 
+const refundId = '<REFUND_ID>'; //refundId used to initiate the refund
+ 
+client.getRefundStatus(refundId).then((response) => {
+    const state = response.state
+})
+Returns:
+
+It returns a RefundStatusResponse Object.
+
+RefundStatusResponse
+
+Property	Data Type	Description
+merchantId	String	Merchant Id who initiated the refund
+merchantRefundId	String	Refund Id created by the merchant at the time of refund initiation
+originalMerchantOrderId	String	Order Id for which refund has initiated. Created by the merchant at the time of order creation
+amount	Number	Amount to refund
+state	String	State of the refund
+paymentDetails	List<PaymentRefundDetail>	Contains the list of details of each transaction attempt made corresponding to this particular order
+PaymentRefundDetail:
+
+Property	Data Type	Description
+transactionId	String	Transaction Id generated by the PhonePe
+paymentMode	String	Mode of Payment. It can be anyone of the following modes:
+1. UPI_INTENT
+2. UPI_COLLECT
+3. UPI_QR
+4. CARD
+5. TOKEN
+6. NET_BANKING
+timestamp	Number	Timestamp of the attempted transaction in epoch
+state	String	Attempted transaction state. It can be any one of the following states: 1. PENDING
+2. COMPLETED
+3. FAILED
+errorCode	String	Error code present only when the transaction state is Failed
+detailedErrorCode	String	Detailed Error Code present only when transaction state is Failed
+splitInstruments	List<InstrumentCombo>	Type of transaction instrument. It can be any one of the following types:
+1. ACCOUNT
+2. CREDIT_CARD
+3. DEBIT_CARD
+4. NET_BANKING
+Updated on Jan 08, 2025
+
+
+
+Callback Verification
+Callback verification
+For verifying if the callback received is valid or not.
+
+Parameter Name	Data Type	Mandatory	Description
+username	String	Yes	Unique username configured for the callback url.
+password	String	Yes	Unique password configured for the callback url.
+authorization	String	Yes	Value of the Authorization header under the callback response.
+responseBody	String	Yes	Callback response body as string.
+Example :
+
+import { StandardCheckoutClient, Env } from 'pg-sdk-node';
+ 
+const clientId = "<clientId>";
+const clientSecret = "<clientSecret>";
+const clientVersion = 1;  //insert your client version here
+const env = Env.SANDBOX;      //change to Env.PRODUCTION when you go live
+ 
+const client = StandardCheckoutClient.getInstance(clientId, clientSecret, clientVersion, env);
+ 
+const authorizationHeaderData = "ef4c914c591698b268db3c64163eafda7209a630f236ebf0eebf045460df723a" // received in the response headers
+const phonepeS2SCallbackResponseBodyString = "{\"type\": \"PG_ORDER_COMPLETED\",\"payload\": {}}"  // callback body as string
+  
+const usernameConfigured = "<MERCHANT_USERNAME>"
+const passwordConfigured = "<MERCHANT_PASSWORD>" 
+ 
+const callbackResponse = client.validateCallback(
+    usernameConfigured,
+    passwordConfigured,
+    authorizationHeaderData,
+    phonepeS2SCallbackResponseBodyString );
+ 
+const orderId = callbackResponse.payload.orderId;
+const state = callbackResponse.payload.state;
+Returns :
+
+The function returns a CallbackResponse object with the following properties:
+
+Callback Response:
+Property	Data Type	Description
+type	CallbackType	Contains event type of callback received at the merchant end.
+payload	CallbackData	Contains callback details.
+Callback Types
+
+Callback Type	Context
+CHECKOUT_ORDER_COMPLETED	Order completed
+CHECKOUT_ORDER_FAILED	Order failed
+PG_REFUND_ACCEPTED	PhonePe has acknowledged the Refund request is valid
+PG_REFUND_COMPLETED	Refund request is successfully completed
+PG_REFUND_FAILED	Refund request failed
+CallbackData object has the following properties:
+
+Attribute	Data Type	Description
+merchantId	String	The merchant from which request was initiated.
+orderId	String	Order id generated by PhonePe. (Only present in case of order callbacks)
+merchantOrderId	String	Order id generated by merchant. (Only present in case of order callbacks)
+originalMerchantOrderId	String	Internal transaction id for given payment attempt. (Only present in case of refund callback)
+refundId	String	Refund id generated by PhonePe. (Only present in case of refund callback)
+merchantRefundId	String	Refund id generated by merchant. (Only present in case of refund callback)
+state	String	State of the order/refund.
+amount	Long	Amount of the order/refund processed.
+expireAt	Long	Expiry in epoch.
+errorCode	String	Error code. (Only present when state is failed)
+detailedErrorCode	String	Detailed error code. (Only present when state is failed)
+metaInfo	MetaInfo	MetaInfo passed during the init of order.
+paymentDetails	List<PaymentDetail>	Payment details.
+PaymentDetail Object has the following properties:
+
+Attribute	Data Type	Description
+transactionId	String	The merchant from which request was initiated.
+paymentMode	String	Order id generated by PhonePe. (Only present in case of order callbacks)
+timestamp	Long	Order id generated by merchant. (Only present in case of order callbacks)
+state	String	Attempted transaction state. It can be any one of the following states:
+1. COMPLETED
+2. FAILED
+3. PENDING
+errorCode	String	Error code. (Only present when state is failed)
+detailedErrorCode	String	Detailed error code. (Only present when state is failed)
+Updated on Jan 08, 2025
+
+
+
+
+
+
+Exception Handling
+This document outlines the exception handling for the exceptions that might incur.
+
+PhonePeException
+Exception raised for errors related to PhonePe APIs.
+
+Attribute	Description
+httpStatusCode	The http status received from the API
+code	The status code of the response.
+message	The error message.
+data	The details of the error that happened while calling phonepe.
+Example :
+
+import { StandardCheckoutPayRequest, StandardCheckoutPayResponse } from 'pg-sdk-node';
+import { v4 as uuid } from 'uuid';
+ 
+const merchantOrderId = uuid();
+const redirectUrl = 'https://www.merchant.com/redirect';
+ 
+const request = StandardCheckoutPayRequest.buidler()
+  .merchantOrderId(merchantOrderId)
+  .redirectUrl(redirectUrl)
+  .build();
+ 
+client.pay(request).then((response) => {
+  const checkoutPageUrl = response.redirectUrl;
+}).catch((error) => {
+    const error = error as PhonePeException;  //error thrown is of PhonePeException type
+    console.log(error.message);
+});
+Response Models for Reference
+Below data can be used when you need to access the response details :
+
+InstrumentCombo :
+
+Property	Type	Description
+instrument	PaymentInstrumentV2	Instrument used for the payment
+rails	PaymentRail	Rail used for the payment
+amount	long	Amount transferred using the above instrument and rail
+PaymentRail :
+
+Different types of rail which is used to initiate payment. The object is :
+
+UPI RAIL
+
+Property	Type
+type	PaymentRailType
+utr	String
+upiTransactionId	String
+vpa	String
+PG RAIL
+
+Property	Type
+type	PaymentRailType
+transactionId	String
+authorizationCode	String
+serviceTransactionId	String
+PaymentInstrumentV2 :
+
+Different types of instruments which is used to initiate a payment
+
+ACCOUNT
+
+Property	Type
+type	PaymentInstrumentType
+ifsc	String
+accountType	String
+maskedAccountNumber	String
+accountHolderName	String
+CREDIT_CARD
+
+Property	Type
+type	PaymentInstrumentType
+bankTransactionId	String
+bankId	String
+arn	String
+brn	String
+DEBIT_CARD
+
+Property	Type
+type	PaymentInstrumentType
+bankTransactionId	String
+bankId	String
+arn	String
+brn	String
+NET_BANKING
+
+Property	Type
+type	PaymentInstrumentType
+bankTransactionId	String
+bankId	String
+arn	String
+brn	String
+EGV
+
+Property	Type
+type	PaymentInstrumentType
+cardNumber	String
+programId	String
+Wallet
+
+Property	Type
+type	PaymentInstrumentType
+walletId	String
+Updated on Jan 08, 2025

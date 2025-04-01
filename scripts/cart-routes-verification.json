@@ -1,0 +1,61 @@
+[
+  {
+    "endpoint": "get_user_cart",
+    "path": "/app/v1/api/get_user_cart",
+    "status": 200,
+    "success": true,
+    "data": {
+      "error": true,
+      "message": "Cart Is Empty !",
+      "data": []
+    }
+  },
+  {
+    "endpoint": "get_cart (alias)",
+    "path": "/app/v1/api/get_cart",
+    "status": 200,
+    "success": true,
+    "data": {
+      "error": true,
+      "message": "Cart Is Empty !",
+      "data": []
+    }
+  },
+  {
+    "endpoint": "manage_cart (add)",
+    "path": "/app/v1/api/manage_cart",
+    "status": 200,
+    "success": true,
+    "data": {
+      "error": false,
+      "message": "Cart Updated !",
+      "cart": [],
+      "data": {
+        "total_quantity": "1",
+        "sub_total": "0",
+        "total_items": "1",
+        "tax_percentage": "0",
+        "tax_amount": "0",
+        "cart_count": "1",
+        "max_items_cart": "100000",
+        "overall_amount": "0"
+      }
+    }
+  },
+  {
+    "endpoint": "remove_from_cart",
+    "path": "/app/v1/api/remove_from_cart",
+    "status": 200,
+    "success": true,
+    "data": {
+      "error": false,
+      "message": "Removed From Cart !",
+      "data": {
+        "total_quantity": "0",
+        "sub_total": "0",
+        "total_items": "0",
+        "max_items_cart": "100000"
+      }
+    }
+  }
+]

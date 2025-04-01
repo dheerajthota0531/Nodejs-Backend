@@ -1,0 +1,801 @@
+{
+    "error": false,
+    "message": "Settings retrieved successfully",
+    "data": {
+        "payment_method": {
+            "paypal_payment_method": "0",
+            "paypal_mode": "sandbox",
+            "paypal_business_email": "seller@somedomain.com",
+            "currency_code": "INR",
+            "razorpay_payment_method": "0",
+            "razorpay_key_id": "rzp_live_oAKIpVBwEn2rRV",
+            "razorpay_secret_key": "xmZiDfJm7kGDsqhuTcSaz3FV",
+            "razorpay_webhook_secret_key": "123456789",
+            "paystack_payment_method": "0",
+            "paystack_key_id": "your paystack_key_id",
+            "paystack_secret_key": "your paystack_secret_key",
+            "stripe_payment_method": "0",
+            "stripe_payment_mode": "test",
+            "stripe_publishable_key": "your stripe_publishable_key",
+            "stripe_secret_key": "your stripe_secret_key",
+            "stripe_webhook_secret_key": "your stripe_webhook_secret_key",
+            "stripe_currency_code": "INR",
+            "flutterwave_payment_method": "0",
+            "flutterwave_public_key": "your flutterwave_public_key",
+            "flutterwave_secret_key": "your flutterwave_secret_key",
+            "flutterwave_encryption_key": "your flutterwave_encryption_key",
+            "flutterwave_webhook_secret_key": "",
+            "flutterwave_currency_code": "NGN",
+            "paytm_payment_method": "0",
+            "paytm_payment_mode": "sandbox",
+            "paytm_merchant_key": "your paytm_merchant_key",
+            "paytm_merchant_id": "your paytm_merchant_id",
+            "paytm_website": "WEBSTAGING",
+            "paytm_industry_type_id": "Retail",
+            "midtrans_payment_mode": "",
+            "midtrans_payment_method": "0",
+            "midtrans_client_key": "",
+            "midtrans_merchant_id": "",
+            "midtrans_server_key": "",
+            "google_pay_payment_method": "0",
+            "google_pay_mode": "",
+            "google_pay_merchant_name": "",
+            "google_pay_merchant_id": "",
+            "google_pay_currency_code": "",
+            "google_pay_country_code": "",
+            "direct_bank_transfer": "0",
+            "account_name": "Esh E-Commerce LLC.",
+            "account_number": "1234567891012",
+            "bank_name": "State Bank of India",
+            "bank_code": "SBI0123456789",
+            "notes": "        <p>Please do not forget to upload the bank transfer receipt upon sending / depositing money to the above-mentioned account. Once the amount deposit is confirmed the order will be processed further. To upload the receipt go to your order details page or screen and find a form to upload the receipt.</p>",
+            "myfaoorah_payment_method": "0",
+            "myfatoorah_token": "0",
+            "myfatoorah_payment_mode": "",
+            "myfatoorah__successUrl": "",
+            "myfatoorah__errorUrl": "",
+            "myfatoorah_language": "",
+            "myfatoorah_country": "",
+            "myfatoorah__secret_key": "",
+            "cod_method": "1"
+        },
+        "time_slot_config": {
+            "time_slot_config": "1",
+            "is_time_slots_enabled": "1",
+            "delivery_starts_from": 0,
+            "allowed_days": "15",
+            "starting_date": "2025-03-27"
+        },
+        "time_slots": [
+            {
+                "id": "1",
+                "title": "Morning 6 AM to 7 AM",
+                "from_time": "06:00:00",
+                "to_time": "07:00:00",
+                "last_order_time": "06:00:00",
+                "status": "1"
+            },
+            {
+                "id": "8",
+                "title": "Morning 9 AM to 11 AM",
+                "from_time": "09:00:00",
+                "to_time": "11:00:00",
+                "last_order_time": "09:00:00",
+                "status": "1"
+            },
+            {
+                "id": "9",
+                "title": "Morning 11 AM to 12 PM",
+                "from_time": "11:00:00",
+                "to_time": "12:01:00",
+                "last_order_time": "10:00:00",
+                "status": "1"
+            },
+            {
+                "id": "4",
+                "title": "Afternoon 2 PM to 4 PM",
+                "from_time": "14:00:00",
+                "to_time": "16:00:00",
+                "last_order_time": "13:30:00",
+                "status": "1"
+            },
+            {
+                "id": "5",
+                "title": "Evening 4 PM to 5 PM",
+                "from_time": "16:00:00",
+                "to_time": "17:00:00",
+                "last_order_time": "15:00:00",
+                "status": "1"
+            },
+            {
+                "id": "6",
+                "title": "Evening 5 PM to 8 PM",
+                "from_time": "17:00:00",
+                "to_time": "20:00:00",
+                "last_order_time": "18:28:00",
+                "status": "1"
+            },
+            {
+                "id": "7",
+                "title": "Evening 6 PM to 8 PM",
+                "from_time": "18:00:00",
+                "to_time": "20:00:00",
+                "last_order_time": "05:30:00",
+                "status": "1"
+            }
+        ],
+        "is_cod_allowed": 1,
+        "tags": [
+            "Ice Cream",
+            "Baby Corn",
+            "BLACK RICE",
+            "Thalimpu Mix"
+        ],
+        "popup_offer": [
+            {
+                "id": "",
+                "is_active": "0",
+                "show_multiple_time": "0",
+                "image": "https://dev.uzvi.in/uploads/media/2025/cauliflower_production_and_dev1.png",
+                "type": "categories",
+                "type_id": "0",
+                "min_discount": "0",
+                "max_discount": "0",
+                "link": "",
+                "date_added": "2025-03-27 12:18:03",
+                "data": [
+                    {
+                        "id": "111",
+                        "name": "Vegetables",
+                        "parent_id": "0",
+                        "slug": "vegetables-2",
+                        "image": "https://dev.uzvi.in/uploads/media/2024/thumb-sm/vegetables.png",
+                        "banner": "https://dev.uzvi.in/",
+                        "row_order": "0",
+                        "status": "1",
+                        "clicks": "18",
+                        "city": "1",
+                        "children": [
+                            {
+                                "id": "118",
+                                "name": "Flower Vegetables",
+                                "parent_id": "111",
+                                "slug": "flower-vegetables",
+                                "image": "https://dev.uzvi.in/uploads/media/2024/thumb-md/cauliflower.png",
+                                "banner": "https://dev.uzvi.in/",
+                                "row_order": "0",
+                                "status": "1",
+                                "clicks": "4784",
+                                "city": "1",
+                                "children": [],
+                                "text": "Flower Vegetables",
+                                "state": {
+                                    "opened": true
+                                },
+                                "level": 1
+                            },
+                            {
+                                "id": "119",
+                                "name": "Fruit Vegetables",
+                                "parent_id": "111",
+                                "slug": "fruit-vegetables-1",
+                                "image": "https://dev.uzvi.in/uploads/media/2024/thumb-md/tomato.png",
+                                "banner": "https://dev.uzvi.in/",
+                                "row_order": "0",
+                                "status": "1",
+                                "clicks": "34668",
+                                "city": "1",
+                                "children": [],
+                                "text": "Fruit Vegetables",
+                                "state": {
+                                    "opened": true
+                                },
+                                "level": 1
+                            },
+                            {
+                                "id": "120",
+                                "name": "Gourd Vegetables",
+                                "parent_id": "111",
+                                "slug": "gourd-vegetables",
+                                "image": "https://dev.uzvi.in/uploads/media/2024/thumb-md/bottle_gourd.png",
+                                "banner": "https://dev.uzvi.in/",
+                                "row_order": "0",
+                                "status": "1",
+                                "clicks": "27323",
+                                "city": "1",
+                                "children": [],
+                                "text": "Gourd Vegetables",
+                                "state": {
+                                    "opened": true
+                                },
+                                "level": 1
+                            },
+                            {
+                                "id": "121",
+                                "name": "Leaf Vegetables",
+                                "parent_id": "111",
+                                "slug": "leaf-vegetables-1",
+                                "image": "https://dev.uzvi.in/uploads/media/2024/thumb-md/coriander_leaves.png",
+                                "banner": "https://dev.uzvi.in/",
+                                "row_order": "0",
+                                "status": "1",
+                                "clicks": "21181",
+                                "city": "1",
+                                "children": [],
+                                "text": "Leaf Vegetables",
+                                "state": {
+                                    "opened": true
+                                },
+                                "level": 1
+                            },
+                            {
+                                "id": "122",
+                                "name": "Root Vegetables",
+                                "parent_id": "111",
+                                "slug": "root-vegetables-1",
+                                "image": "https://dev.uzvi.in/uploads/media/2024/thumb-md/beet_root.png",
+                                "banner": "https://dev.uzvi.in/",
+                                "row_order": "0",
+                                "status": "1",
+                                "clicks": "38594",
+                                "city": "1",
+                                "children": [],
+                                "text": "Root Vegetables",
+                                "state": {
+                                    "opened": true
+                                },
+                                "level": 1
+                            },
+                            {
+                                "id": "123",
+                                "name": "Seed Vegetables",
+                                "parent_id": "111",
+                                "slug": "seed-vegetables-2",
+                                "image": "https://dev.uzvi.in/uploads/media/2024/thumb-md/ladies_finger.png",
+                                "banner": "https://dev.uzvi.in/",
+                                "row_order": "0",
+                                "status": "1",
+                                "clicks": "55174",
+                                "city": "1",
+                                "children": [],
+                                "text": "Seed Vegetables",
+                                "state": {
+                                    "opened": true
+                                },
+                                "level": 1
+                            },
+                            {
+                                "id": "141",
+                                "name": "Combo Offer",
+                                "parent_id": "111",
+                                "slug": "combo-offer-2",
+                                "image": "https://dev.uzvi.in/assets/no-image.png",
+                                "banner": "https://dev.uzvi.in/",
+                                "row_order": "0",
+                                "status": "1",
+                                "clicks": "5082",
+                                "city": "",
+                                "children": [],
+                                "text": "Combo Offer",
+                                "state": {
+                                    "opened": true
+                                },
+                                "level": 1
+                            },
+                            {
+                                "id": "142",
+                                "name": "vegatables curry cut",
+                                "parent_id": "111",
+                                "slug": "vegatables-curry-cut-1",
+                                "image": "https://dev.uzvi.in/uploads/media/2024/thumb-md/ridge_gourd_cut_pieces.png",
+                                "banner": "https://dev.uzvi.in/",
+                                "row_order": "0",
+                                "status": "1",
+                                "clicks": "5534",
+                                "city": "1",
+                                "children": [],
+                                "text": "vegatables curry cut",
+                                "state": {
+                                    "opened": true
+                                },
+                                "level": 1
+                            },
+                            {
+                                "id": "146",
+                                "name": "Mushroom & Paneer",
+                                "parent_id": "111",
+                                "slug": "mushroom-paneer-1",
+                                "image": "https://dev.uzvi.in/uploads/media/2024/thumb-md/paneer_image_1.png",
+                                "banner": "https://dev.uzvi.in/",
+                                "row_order": "0",
+                                "status": "1",
+                                "clicks": "5456",
+                                "city": "1",
+                                "children": [],
+                                "text": "Mushroom & Paneer",
+                                "state": {
+                                    "opened": true
+                                },
+                                "level": 1
+                            },
+                            {
+                                "id": "153",
+                                "name": "Banana",
+                                "parent_id": "111",
+                                "slug": "banana",
+                                "image": "https://dev.uzvi.in/uploads/media/2024/thumb-md/edit_raw_banana.jpeg",
+                                "banner": "https://dev.uzvi.in/",
+                                "row_order": "0",
+                                "status": "1",
+                                "clicks": "0",
+                                "city": "1",
+                                "children": [],
+                                "text": "Banana",
+                                "state": {
+                                    "opened": true
+                                },
+                                "level": 1
+                            }
+                        ],
+                        "text": "Vegetables",
+                        "state": {
+                            "opened": true
+                        },
+                        "icon": "jstree-folder",
+                        "level": 0,
+                        "total": 45
+                    },
+                    {
+                        "id": "154",
+                        "name": "Ice Cream",
+                        "parent_id": "0",
+                        "slug": "ice-cream",
+                        "image": "https://dev.uzvi.in/uploads/media/2024/vegetables_category.png",
+                        "banner": "https://dev.uzvi.in/",
+                        "row_order": "0",
+                        "status": "1",
+                        "clicks": "43",
+                        "city": "2",
+                        "children": [],
+                        "text": "Ice Cream",
+                        "state": {
+                            "opened": true
+                        },
+                        "icon": "jstree-folder",
+                        "level": 0
+                    },
+                    {
+                        "id": "155",
+                        "name": "Ice Cream",
+                        "parent_id": "0",
+                        "slug": "ice-cream-1",
+                        "image": "https://dev.uzvi.in/uploads/media/2024/Ice_cream.jpg",
+                        "banner": "https://dev.uzvi.in/",
+                        "row_order": "0",
+                        "status": "1",
+                        "clicks": "0",
+                        "city": "1",
+                        "children": [],
+                        "text": "Ice Cream",
+                        "state": {
+                            "opened": true
+                        },
+                        "icon": "jstree-folder",
+                        "level": 0
+                    },
+                    {
+                        "id": "112",
+                        "name": "Fruits",
+                        "parent_id": "0",
+                        "slug": "fruits-1",
+                        "image": "https://dev.uzvi.in/uploads/media/2024/thumb-sm/fruits_image.png",
+                        "banner": "https://dev.uzvi.in/",
+                        "row_order": "1",
+                        "status": "1",
+                        "clicks": "379",
+                        "city": "1",
+                        "children": [
+                            {
+                                "id": "129",
+                                "name": "Imported Fruits",
+                                "parent_id": "112",
+                                "slug": "imported-fruits-1",
+                                "image": "https://dev.uzvi.in/uploads/media/2024/thumb-md/imported_fruits.png",
+                                "banner": "https://dev.uzvi.in/",
+                                "row_order": "0",
+                                "status": "1",
+                                "clicks": "18099",
+                                "city": "1",
+                                "children": [],
+                                "text": "Imported Fruits",
+                                "state": {
+                                    "opened": true
+                                },
+                                "level": 1
+                            },
+                            {
+                                "id": "130",
+                                "name": "Non-Imported Fruits",
+                                "parent_id": "112",
+                                "slug": "non-imported-fruits-1",
+                                "image": "https://dev.uzvi.in/uploads/media/2024/thumb-md/non-imported_fruits.png",
+                                "banner": "https://dev.uzvi.in/",
+                                "row_order": "0",
+                                "status": "1",
+                                "clicks": "18508",
+                                "city": "1",
+                                "children": [],
+                                "text": "Non-Imported Fruits",
+                                "state": {
+                                    "opened": true
+                                },
+                                "level": 1
+                            },
+                            {
+                                "id": "143",
+                                "name": "Fruits Combo Offer",
+                                "parent_id": "112",
+                                "slug": "fruits-combo-offer",
+                                "image": "https://dev.uzvi.in/uploads/media/2024/thumb-md/3_fruits_combo.jpeg",
+                                "banner": "https://dev.uzvi.in/",
+                                "row_order": "0",
+                                "status": "1",
+                                "clicks": "3828",
+                                "city": "1",
+                                "children": [],
+                                "text": "Fruits Combo Offer",
+                                "state": {
+                                    "opened": true
+                                },
+                                "level": 1
+                            },
+                            {
+                                "id": "147",
+                                "name": "Ready to Eat",
+                                "parent_id": "112",
+                                "slug": "ready-to-eat",
+                                "image": "https://dev.uzvi.in/assets/no-image.png",
+                                "banner": "https://dev.uzvi.in/",
+                                "row_order": "0",
+                                "status": "1",
+                                "clicks": "2987",
+                                "city": "",
+                                "children": [],
+                                "text": "Ready to Eat",
+                                "state": {
+                                    "opened": true
+                                },
+                                "level": 1
+                            }
+                        ],
+                        "text": "Fruits",
+                        "state": {
+                            "opened": true
+                        },
+                        "icon": "jstree-folder",
+                        "level": 0
+                    },
+                    {
+                        "id": "113",
+                        "name": "Chicken",
+                        "parent_id": "0",
+                        "slug": "chicken-1",
+                        "image": "https://dev.uzvi.in/uploads/media/2024/thumb-sm/chicken_biriyani_cut_image.png",
+                        "banner": "https://dev.uzvi.in/",
+                        "row_order": "2",
+                        "status": "1",
+                        "clicks": "0",
+                        "city": "1",
+                        "children": [
+                            {
+                                "id": "124",
+                                "name": "Broiler",
+                                "parent_id": "113",
+                                "slug": "broiler",
+                                "image": "https://dev.uzvi.in/uploads/media/2024/thumb-md/chicken_drumsticks.png",
+                                "banner": "https://dev.uzvi.in/",
+                                "row_order": "0",
+                                "status": "1",
+                                "clicks": "20847",
+                                "city": "1",
+                                "children": [],
+                                "text": "Broiler",
+                                "state": {
+                                    "opened": true
+                                },
+                                "level": 1
+                            },
+                            {
+                                "id": "125",
+                                "name": "Naatu Kodi",
+                                "parent_id": "113",
+                                "slug": "naatu-kodi-1",
+                                "image": "https://dev.uzvi.in/uploads/media/2024/thumb-md/nattu_kodi_chicken_cut_pieces.png",
+                                "banner": "https://dev.uzvi.in/",
+                                "row_order": "0",
+                                "status": "1",
+                                "clicks": "5243",
+                                "city": "1",
+                                "children": [],
+                                "text": "Naatu Kodi",
+                                "state": {
+                                    "opened": true
+                                },
+                                "level": 1
+                            }
+                        ],
+                        "text": "Chicken",
+                        "state": {
+                            "opened": true
+                        },
+                        "icon": "jstree-folder",
+                        "level": 0
+                    },
+                    {
+                        "id": "150",
+                        "name": "Groceries",
+                        "parent_id": "0",
+                        "slug": "groceries",
+                        "image": "https://dev.uzvi.in/uploads/media/2024/thumb-sm/groceries.png",
+                        "banner": "https://dev.uzvi.in/",
+                        "row_order": "3",
+                        "status": "1",
+                        "clicks": "155",
+                        "city": "",
+                        "children": [],
+                        "text": "Groceries",
+                        "state": {
+                            "opened": true
+                        },
+                        "icon": "jstree-folder",
+                        "level": 0
+                    },
+                    {
+                        "id": "151",
+                        "name": "Vegetables",
+                        "parent_id": "0",
+                        "slug": "vegetables-1",
+                        "image": "https://dev.uzvi.in/uploads/media/2024/thumb-sm/tomato.png",
+                        "banner": "https://dev.uzvi.in/",
+                        "row_order": "4",
+                        "status": "1",
+                        "clicks": "0",
+                        "city": "1",
+                        "children": [
+                            {
+                                "id": "152",
+                                "name": "Seed Vegetables",
+                                "parent_id": "151",
+                                "slug": "seed-vegetables-1",
+                                "image": "https://dev.uzvi.in/uploads/media/2024/thumb-md/bajji_mirchi.png",
+                                "banner": "https://dev.uzvi.in/",
+                                "row_order": "0",
+                                "status": "1",
+                                "clicks": "8",
+                                "city": "1",
+                                "children": [],
+                                "text": "Seed Vegetables",
+                                "state": {
+                                    "opened": true
+                                },
+                                "level": 1
+                            }
+                        ],
+                        "text": "Vegetables",
+                        "state": {
+                            "opened": true
+                        },
+                        "icon": "jstree-folder",
+                        "level": 0
+                    },
+                    {
+                        "id": "149",
+                        "name": "Juises",
+                        "parent_id": "0",
+                        "slug": "juises",
+                        "image": "https://dev.uzvi.in/assets/no-image.png",
+                        "banner": "https://dev.uzvi.in/",
+                        "row_order": "5",
+                        "status": "1",
+                        "clicks": "0",
+                        "city": "",
+                        "children": [],
+                        "text": "Juises",
+                        "state": {
+                            "opened": true
+                        },
+                        "icon": "jstree-folder",
+                        "level": 0
+                    },
+                    {
+                        "id": "144",
+                        "name": "Dry Fruits",
+                        "parent_id": "0",
+                        "slug": "dry-fruits-1",
+                        "image": "https://dev.uzvi.in/uploads/media/2024/thumb-sm/dryfruits_image.png",
+                        "banner": "https://dev.uzvi.in/",
+                        "row_order": "6",
+                        "status": "1",
+                        "clicks": "7053",
+                        "city": "1",
+                        "children": [],
+                        "text": "Dry Fruits",
+                        "state": {
+                            "opened": true
+                        },
+                        "icon": "jstree-folder",
+                        "level": 0
+                    },
+                    {
+                        "id": "115",
+                        "name": "Sea Food",
+                        "parent_id": "0",
+                        "slug": "sea-food-1",
+                        "image": "https://dev.uzvi.in/assets/no-image.png",
+                        "banner": "https://dev.uzvi.in/assets/no-image.png",
+                        "row_order": "7",
+                        "status": "1",
+                        "clicks": "239",
+                        "city": "",
+                        "children": [
+                            {
+                                "id": "136",
+                                "name": "Fishes",
+                                "parent_id": "115",
+                                "slug": "fishes",
+                                "image": "https://dev.uzvi.in/assets/no-image.png",
+                                "banner": "https://dev.uzvi.in/",
+                                "row_order": "0",
+                                "status": "1",
+                                "clicks": "4093",
+                                "city": "",
+                                "children": [],
+                                "text": "Fishes",
+                                "state": {
+                                    "opened": true
+                                },
+                                "level": 1
+                            },
+                            {
+                                "id": "137",
+                                "name": "Prawns",
+                                "parent_id": "115",
+                                "slug": "prawns",
+                                "image": "https://dev.uzvi.in/assets/no-image.png",
+                                "banner": "https://dev.uzvi.in/",
+                                "row_order": "0",
+                                "status": "1",
+                                "clicks": "2096",
+                                "city": "",
+                                "children": [],
+                                "text": "Prawns",
+                                "state": {
+                                    "opened": true
+                                },
+                                "level": 1
+                            },
+                            {
+                                "id": "138",
+                                "name": "Crabs",
+                                "parent_id": "115",
+                                "slug": "crabs",
+                                "image": "https://dev.uzvi.in/assets/no-image.png",
+                                "banner": "https://dev.uzvi.in/",
+                                "row_order": "0",
+                                "status": "1",
+                                "clicks": "1071",
+                                "city": "",
+                                "children": [],
+                                "text": "Crabs",
+                                "state": {
+                                    "opened": true
+                                },
+                                "level": 1
+                            }
+                        ],
+                        "text": "Sea Food",
+                        "state": {
+                            "opened": true
+                        },
+                        "icon": "jstree-folder",
+                        "level": 0
+                    },
+                    {
+                        "id": "116",
+                        "name": "Eggs",
+                        "parent_id": "0",
+                        "slug": "eggs",
+                        "image": "https://dev.uzvi.in/uploads/media/2024/thumb-sm/boiler_eggs.png",
+                        "banner": "https://dev.uzvi.in/",
+                        "row_order": "8",
+                        "status": "1",
+                        "clicks": "1644",
+                        "city": "1",
+                        "children": [],
+                        "text": "Eggs",
+                        "state": {
+                            "opened": true
+                        },
+                        "icon": "jstree-folder",
+                        "level": 0
+                    },
+                    {
+                        "id": "148",
+                        "name": "SPICES",
+                        "parent_id": "0",
+                        "slug": "spices-1",
+                        "image": "https://dev.uzvi.in/uploads/media/2024/thumb-sm/spices_new.png",
+                        "banner": "https://dev.uzvi.in/",
+                        "row_order": "9",
+                        "status": "1",
+                        "clicks": "866",
+                        "city": "1",
+                        "children": [],
+                        "text": "SPICES",
+                        "state": {
+                            "opened": true
+                        },
+                        "icon": "jstree-folder",
+                        "level": 0
+                    },
+                    {
+                        "id": "117",
+                        "name": "Pickles",
+                        "parent_id": "0",
+                        "slug": "pickles",
+                        "image": "https://dev.uzvi.in/assets/no-image.png",
+                        "banner": "https://dev.uzvi.in/",
+                        "row_order": "10",
+                        "status": "1",
+                        "clicks": "0",
+                        "city": "",
+                        "children": [
+                            {
+                                "id": "126",
+                                "name": "Veg Pickles",
+                                "parent_id": "117",
+                                "slug": "veg-pickles",
+                                "image": "https://dev.uzvi.in/assets/no-image.png",
+                                "banner": "https://dev.uzvi.in/",
+                                "row_order": "0",
+                                "status": "1",
+                                "clicks": "134",
+                                "city": "",
+                                "children": [],
+                                "text": "Veg Pickles",
+                                "state": {
+                                    "opened": true
+                                },
+                                "level": 1
+                            },
+                            {
+                                "id": "127",
+                                "name": "Non Veg Pickles",
+                                "parent_id": "117",
+                                "slug": "non-veg-pickles-1",
+                                "image": "https://dev.uzvi.in/assets/no-image.png",
+                                "banner": "https://dev.uzvi.in/",
+                                "row_order": "0",
+                                "status": "1",
+                                "clicks": "2688",
+                                "city": "",
+                                "children": [],
+                                "text": "Non Veg Pickles",
+                                "state": {
+                                    "opened": true
+                                },
+                                "level": 1
+                            }
+                        ],
+                        "text": "Pickles",
+                        "state": {
+                            "opened": true
+                        },
+                        "icon": "jstree-folder",
+                        "level": 0
+                    }
+                ]
+            }
+        ]
+    }
+}
