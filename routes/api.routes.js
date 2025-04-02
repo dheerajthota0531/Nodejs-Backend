@@ -68,16 +68,18 @@ const {
   checkPhonePePaymentStatus
 } = require('../controllers/payment.controller');
 
+// Import cache middleware
+const { cacheMiddleware } = require('../middleware/cache');
+
 // Auth routes
 router.post('/login', loginController);
 router.post('/register', registerController);
 
-// Define routes
-router.post('/get_categories', getCategoriesController);
-router.post('/get_products', getProducts);
-router.post('/get_sections', getSectionsController);
-router.post('/get_slider_images', getSliderImagesController);
-router.post('/get_settings', getSettingsController);
+// Define routes with caching (get_settings, get_categories, get_products, get_sections)
+router.post('/get_settings', cacheMiddleware(600), getSettingsController);
+router.post('/get_categories', cacheMiddleware(600), getCategoriesController);
+router.post('/get_products', cacheMiddleware(300), getProducts);
+router.post('/get_sections', cacheMiddleware(300), getSectionsController);
 
 // Zipcode routes
 router.post('/get_zipcodes', getZipcodesController);

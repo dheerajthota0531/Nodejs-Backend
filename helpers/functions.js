@@ -202,41 +202,13 @@ function getImageUrl(imagePath, type = '', size = '') {
     return ''; // Return empty string for null/undefined paths
   }
   
-  // Base URL for the CDN - ensure we always use this URL
-  const baseUrl = 'https://uzvisimages.blr1.cdn.digitaloceanspaces.com/';
-  
-  // Check if the URL is already absolute
-  if (imagePath.startsWith('http://') || imagePath.startsWith('https://')) {
-    // If it uses the old domains, replace them with the CDN URL
-    if (imagePath.includes('dev.uzvi.in')) {
-      return imagePath.replace('https://dev.uzvi.in/', baseUrl);
-    }
-    if (imagePath.includes('admin.uzvi.in')) {
-      return imagePath.replace('https://admin.uzvi.in/', baseUrl);
-    }
-    // For other URLs from different domains, keep as is
-    return imagePath;
-  }
-  
-  // Ensure path has uploads prefix if needed
-  let fullPath = imagePath;
-  if (!imagePath.startsWith('uploads/')) {
-    fullPath = `uploads/${imagePath}`;
-  }
-  
-  // Handle size-specific paths
+  // Use formatImageUrl to ensure consistent CDN URL usage
+  // This ensures getImageUrl and formatImageUrl behave consistently
   if (type === 'thumb') {
-    // Get the filename from path
-    const filename = imagePath.split('/').pop();
-    if (size === 'sm') {
-      return `${baseUrl}uploads/media/2024/thumb-sm/${filename}`;
-    } else if (size === 'md') {
-      return `${baseUrl}uploads/media/2024/thumb-md/${filename}`;
-    }
+    return formatImageUrl(imagePath, size);
   }
   
-  // Return full URL
-  return `${baseUrl}${fullPath}`;
+  return formatImageUrl(imagePath);
 }
 
 /**
@@ -627,15 +599,23 @@ function formatResponse(error, message = '', data = [], additionalParams = {}) {
  * @returns {string} - Formatted URL
  */
 function formatImageUrl(imagePath, size = '') {
-  // Base URL for the CDN - ensure we always use this URL
-  const baseUrl = 'https://uzvisimages.blr1.cdn.digitaloceanspaces.com/';
+  // Import config to get CDN URL
+  const config = require('../config/config');
+  
+  // Base URL for the CDN - get from config
+  const baseUrl = config.imageBaseUrl;
   
   if (!imagePath) {
-    return `${baseUrl}uploads/media/2022/uzvis.png`; // Default image
+    return config.noImageUrl; // Default image from config
   }
   
   // Check if the URL is already absolute
   if (imagePath.startsWith('http://') || imagePath.startsWith('https://')) {
+    // If it already uses the CDN URL, return as is
+    if (imagePath.startsWith(baseUrl)) {
+      return imagePath;
+    }
+    
     // If it uses the old domains, replace them with the CDN URL
     if (imagePath.includes('dev.uzvi.in')) {
       return imagePath.replace('https://dev.uzvi.in/', baseUrl);
@@ -643,7 +623,17 @@ function formatImageUrl(imagePath, size = '') {
     if (imagePath.includes('admin.uzvi.in')) {
       return imagePath.replace('https://admin.uzvi.in/', baseUrl);
     }
-    return imagePath;
+    
+    // For other absolute URLs not using the CDN, convert them to use the CDN
+    // Extract the path after the domain
+    try {
+      const url = new URL(imagePath);
+      const pathName = url.pathname.startsWith('/') ? url.pathname.substring(1) : url.pathname;
+      return `${baseUrl}${pathName}`;
+    } catch (e) {
+      // If URL parsing fails, return the original URL
+      return imagePath;
+    }
   }
   
   // Ensure path has uploads prefix if needed
@@ -652,14 +642,14 @@ function formatImageUrl(imagePath, size = '') {
     fullPath = `uploads/${imagePath}`;
   }
   
-  // Handle size-specific paths
+  // Handle size-specific paths using config for consistency
   if (size === 'thumb' || size === 'sm') {
     // Get the filename from path
     const filename = imagePath.split('/').pop();
-    return `${baseUrl}uploads/media/2024/thumb-sm/${filename}`;
+    return `${baseUrl}${config.mediaPath}${config.imageSizes.sm}/${filename}`;
   } else if (size === 'md') {
     const filename = imagePath.split('/').pop();
-    return `${baseUrl}uploads/media/2024/thumb-md/${filename}`;
+    return `${baseUrl}${config.mediaPath}${config.imageSizes.md}/${filename}`;
   }
   
   // Return full URL
@@ -833,11 +823,11 @@ async function getCartTotal(userId) {
     
     // Process each cart item
     for (let i = 0; i < cartItems.length; i++) {
-      // Process product image with CDN URL
+      // Process product image with CDN URL - use formatImageUrl for consistency
       if (cartItems[i].image) {
-        cartItems[i].image = getImageUrl(cartItems[i].image);
-        cartItems[i].image_sm = getImageUrl(cartItems[i].image, 'thumb', 'sm');
-        cartItems[i].image_md = getImageUrl(cartItems[i].image, 'thumb', 'md');
+        cartItems[i].image = formatImageUrl(cartItems[i].image);
+        cartItems[i].image_sm = formatImageUrl(cartItems[i].image, 'sm');
+        cartItems[i].image_md = formatImageUrl(cartItems[i].image, 'md');
       }
       
       const price = parseFloat(cartItems[i].special_price > 0 ? cartItems[i].special_price : cartItems[i].price);

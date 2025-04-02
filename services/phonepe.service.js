@@ -17,6 +17,11 @@ let phonePeAvailable = null; // Availability status cache
  * @returns {Promise<boolean>} True if PhonePe is available, false otherwise
  */
 async function isPhonePeAvailable() {
+  // For UAT testing, always return true
+  console.log('UAT Testing: Forcing PhonePe availability to true');
+  return true;
+
+  /* Original function commented out for testing
   // Return cached result if available (valid for 5 minutes)
   if (phonePeAvailable !== null) {
     return phonePeAvailable;
@@ -77,6 +82,7 @@ async function isPhonePeAvailable() {
     setTimeout(() => { phonePeAvailable = null; }, 5 * 60 * 1000);
     return false;
   }
+  */
 }
 
 /**
@@ -95,12 +101,20 @@ async function getClient() {
       // Set environment based on configuration
       const env = phonePeConfig.environment === PHONEPE_ENV.PRODUCTION ? Env.PRODUCTION : Env.SANDBOX;
       
+      // Add options with grant_type for UAT environment
+      const options = {
+        grantType: 'client_credentials'
+      };
+      
+      console.log('Using UAT/SANDBOX environment with grant_type: client_credentials');
+      
       // Initialize PhonePe client using getInstance as per documentation
       phonePeClient = StandardCheckoutClient.getInstance(
         phonePeConfig.clientId,
         phonePeConfig.clientSecret,
         phonePeConfig.clientVersion,
-        env
+        env,
+        options  // Add options parameter for UAT
       );
       
       authInitialized = true;

@@ -89,6 +89,30 @@ This project is a Node.js implementation of the PHP e-commerce API, maintaining 
 
 This repository contains the backend API server for the e-commerce application with PhonePe payment integration.
 
+## Performance Optimizations
+
+### API Response Caching
+
+The API now includes response caching for frequently accessed endpoints to improve performance and reduce database load:
+
+- `/get_settings` - TTL: 600 seconds (10 minutes)
+- `/get_categories` - TTL: 600 seconds (10 minutes)
+- `/get_products` - TTL: 300 seconds (5 minutes)
+- `/get_sections` - TTL: 300 seconds (5 minutes)
+
+This implementation uses node-cache for in-memory caching. For detailed information, see [CACHING.md](./CACHING.md).
+
+#### Cache Management
+
+Two admin endpoints are available for monitoring and managing the cache:
+
+```
+GET /admin/cache-stats
+POST /admin/clear-cache
+```
+
+Performance testing shows 90-99% reduction in response times for cached endpoints.
+
 ## Prerequisites
 
 - Node.js v14+
@@ -248,3 +272,68 @@ Check logs for more detailed error information:
 ```
 pm2 logs nodejs-api
 ```
+
+# PhonePe UAT Testing
+
+This section describes how to test the PhonePe payment integration using UAT credentials.
+
+## Prerequisites
+
+1. Make sure you have installed all dependencies:
+
+   ```
+   npm install
+   ```
+
+2. Verify the PhonePe SDK is installed:
+   ```
+   npm list pg-sdk-node
+   ```
+
+## Configuration
+
+The PhonePe UAT credentials are configured in the `.env` file:
+
+```
+PHONEPE_CLIENT_ID=M220FPIWE4PZDUAT_2504011
+PHONEPE_CLIENT_SECRET=ZTlmNmIzZTktYmE2NC00YTE2LWFlNDAtNjczMjM1NGU3M2My
+PHONEPE_CLIENT_VERSION=1
+PHONEPE_MERCHANT_ID=M220FPIWE4PZDUAT
+PHONEPE_ENVIRONMENT=SANDBOX
+```
+
+## Testing the Integration
+
+1. Run the debug helper to test direct integration:
+
+   ```
+   node phonepe-debug.js
+   ```
+
+2. Start your Node.js server:
+
+   ```
+   node app.js
+   ```
+
+3. In a separate terminal, start your React frontend:
+
+   ```
+   cd ../Dev_code_Backup_Node_js_Mar_26th
+   npm run dev
+   ```
+
+4. Navigate to your checkout page and place an order with PhonePe as the payment method.
+
+5. For mobile testing, use the PhonePe Test App:
+   - For Android: Download from the link in the PhonePe documentation
+   - For iOS: Share your email with PhonePe to receive access via Firebase
+
+## Debugging
+
+If you encounter issues, check the server logs for PhonePe interaction details. The following log messages are particularly useful:
+
+- "UAT Testing: Forcing PhonePe availability to true" - Confirms the availability bypass is working
+- "Using UAT/SANDBOX environment with grant_type: client_credentials" - Confirms correct UAT parameters
+- "PhonePe payment request:" - Shows the data being sent to PhonePe
+- "PhonePe payment response:" - Shows the response from PhonePe

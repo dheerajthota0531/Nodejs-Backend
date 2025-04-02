@@ -263,12 +263,13 @@ async function get_user_cart(user_id, is_saved_for_later = 0, product_variant_id
         item.is_saved_for_later = String(item.is_saved_for_later);
         item.is_prices_inclusive_tax = String(item.is_prices_inclusive_tax);
         
-        // Process image URL to use CDN
+        // Process image URL to use CDN with formatImageUrl instead of getImageUrl
+        const { formatImageUrl } = require('../helpers/functions');
         if (item.image) {
-          item.image = getImageUrl(item.image);
+          item.image = formatImageUrl(item.image);
           // Add image_sm and image_md for thumbnails
-          item.image_sm = getImageUrl(item.image, 'thumb', 'sm');
-          item.image_md = getImageUrl(item.image, 'thumb', 'md');
+          item.image_sm = formatImageUrl(item.image, 'sm');
+          item.image_md = formatImageUrl(item.image, 'md');
         }
         
         // Make sure weight is a string
@@ -493,9 +494,10 @@ async function get_cart_total(user_id, product_variant_id = null, is_saved_for_l
     // Process images for each cart item
     for (const item of cart_items) {
       if (item.image) {
-        item.image = getImageUrl(item.image);
-        item.image_sm = getImageUrl(item.image, 'thumb', 'sm');
-        item.image_md = getImageUrl(item.image, 'thumb', 'md');
+        const { formatImageUrl } = require('../helpers/functions');
+        item.image = formatImageUrl(item.image);
+        item.image_sm = formatImageUrl(item.image, 'sm');
+        item.image_md = formatImageUrl(item.image, 'md');
       }
     }
     
