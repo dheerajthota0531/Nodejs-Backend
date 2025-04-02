@@ -12,13 +12,13 @@ const PHONEPE_ENV = {
 // PhonePe configuration object
 const phonePeConfig = {
   // Client credentials from your PhonePe business dashboard
-  clientId: process.env.PHONEPE_CLIENT_ID || 'SU2503252031280813644090',
-  clientSecret: process.env.PHONEPE_CLIENT_SECRET || 'c8857ce8-6222-4c8b-a9ba-62ee6be6a7ea',
+  clientId: process.env.PHONEPE_CLIENT_ID || 'M220FPIWE4PZDUAT_2504011',
+  clientSecret: process.env.PHONEPE_CLIENT_SECRET || 'ZTlmNmIzZTktYmE2NC00YTE2LWFlNDAtNjczMjM1NGU3M2My',
   clientVersion: parseInt(process.env.PHONEPE_CLIENT_VERSION || '1'),
-  merchantId: process.env.PHONEPE_MERCHANT_ID || 'M220FPIWE4PZD',
+  merchantId: process.env.PHONEPE_MERCHANT_ID || 'M220FPIWE4PZDUAT',
   
   // Environment - should be SANDBOX for testing, PRODUCTION for live
-  environment: process.env.PHONEPE_ENVIRONMENT || PHONEPE_ENV.PRODUCTION,
+  environment: process.env.PHONEPE_ENVIRONMENT || PHONEPE_ENV.SANDBOX,
   
   // Merchant API/backend domain for callbacks from PhonePe
   // This should be the domain where your API is running

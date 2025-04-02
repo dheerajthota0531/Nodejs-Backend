@@ -1,3 +1,22 @@
+# Change Log
+
+## 2024-04-02: API Performance Optimization
+
+- Added API response caching for frequently accessed endpoints
+  - Implemented caching for get_settings, get_categories, get_products, get_sections
+  - Created cache management endpoints for monitoring and administration
+  - Added cache documentation in CACHING.md
+- Fixed image URL handling for CDN
+  - Updated formatImageUrl and getImageUrl functions to consistently use CDN URL
+  - Improved CDN URL handling for absolute and relative image paths
+  - Modified cart handler to use consistent image URL formatting
+
+## 2024-04-01: PhonePe Integration
+
+- Added PhonePe payment gateway integration
+- Implemented payment initiation, status check, and callback handling
+- Added UAT testing support and documentation
+
 # CDN Image URL Changes
 
 ## Overview

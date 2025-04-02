@@ -7,6 +7,7 @@ const path = require('path');
 const cartEnhancerMiddleware = require('./middleware/cart-enhancer');
 const fileUpload = require('express-fileupload');
 const fs = require('fs');
+const { getCacheStats, clearCache } = require('./middleware/cache');
 
 // Create Express app
 const app = express();
@@ -99,6 +100,24 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/app/v1/api', cartEnhancerMiddleware, apiRoutes);
 app.use('/api/payment', paymentRoutes);
 
+// Cache statistics route (protected, admin only)
+app.get('/admin/cache-stats', (req, res) => {
+  res.json({
+    stats: getCacheStats(),
+    timestamp: new Date().toISOString()
+  });
+});
+
+// Cache clear route (protected, admin only)
+app.post('/admin/clear-cache', (req, res) => {
+  const pattern = req.body.pattern || '';
+  clearCache(pattern);
+  res.json({
+    message: `Cache cleared for pattern: "${pattern}" (empty pattern clears all)`,
+    timestamp: new Date().toISOString()
+  });
+});
+
 // Error handling for file upload errors
 app.use((err, req, res, next) => {
   if (err && err.code === 'LIMIT_FILE_SIZE') {
@@ -135,7 +154,14 @@ app.use((err, req, res, next) => {
 app.get('/', (req, res) => {
   res.json({
     message: 'Welcome to the eShop API',
-    version: '1.0.0'
+    version: '1.0.0',
+    features: [
+      'Response caching for better performance',
+      'Cart management',
+      'Order processing',
+      'Payment integration',
+      'User management'
+    ]
   });
 });
 
@@ -153,6 +179,7 @@ app.listen(PORT, () => {
   console.log(`=== E-COMMERCE API SERVER STARTED ===`);
   console.log(`Server is running on port ${PORT}`);
   console.log(`API endpoint: http://localhost:${PORT}/app/v1/api`);
+  console.log(`Caching enabled for key endpoints (get_settings, get_categories, get_products, get_sections)`);
   console.log(`Available cart endpoints:`);
   console.log(`- http://localhost:${PORT}/app/v1/api/get_user_cart (POST)`);
   console.log(`- http://localhost:${PORT}/app/v1/api/manage_cart (POST)`);
